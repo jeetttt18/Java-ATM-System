@@ -1,6 +1,10 @@
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.Scanner;
+import javax.swing.JOptionPane;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 public class UserService {
 
@@ -187,5 +191,37 @@ public class UserService {
         }
 
         return null;
+    }
+    public void signupFromGUI(String name, int pin) {
+
+        try {
+
+            Connection con = DBConnection.getConnection();
+
+            String query = "INSERT INTO users (name, pin, balance) VALUES (?, ?, 0)";
+
+            PreparedStatement pst = con.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
+
+            pst.setString(1, name);
+            pst.setInt(2, pin);
+
+            pst.executeUpdate();
+
+            ResultSet rs = pst.getGeneratedKeys();
+
+            if (rs.next()) {
+
+                int acc = rs.getInt(1);
+
+                JOptionPane.showMessageDialog(null,
+                        "Signup Successful!\nYour Account Number: " + acc);
+
+            }
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+        }
     }
 }

@@ -52,7 +52,10 @@ public class ATMLoginGUI extends JFrame {
         // Signup Button Action (optional)
         signupButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(null, "Use Console Signup for now.");
+
+                dispose(); // close login window
+                new SignupGUI(); // open signup window
+
             }
         });
 
